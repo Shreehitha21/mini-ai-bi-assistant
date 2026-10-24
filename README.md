@@ -3,7 +3,7 @@
 A full-stack, AI-assisted business intelligence application built for a Graduate Engineer Trainee (GET) selection assignment. It allows users to ask natural language questions about sales data and receives deterministic, SQL-backed answers.
 
 ## 🚀 Public URL
-**Deployment Link:** [URL will be added after deployment]
+**Deployment Link:** https://mini-ai-bi-assistant.onrender.com/
 
 ## 🎯 Features
 * **Natural Language to Analytics:** Understands questions like "What is the total revenue?"
