@@ -4,7 +4,7 @@ def get_total_revenue():
     """Calculates total revenue from completed transactions."""
     conn = get_db_connection()
     cursor = conn.cursor()
-    # Notice we strictly use Status = 'Completed' to exclude returned items
+    
     query = """
         SELECT 
             SUM(Revenue) as total_revenue,
@@ -52,7 +52,7 @@ def get_monthly_revenue_trend():
     """Groups revenue by month."""
     conn = get_db_connection()
     cursor = conn.cursor()
-    # strftime('%Y-%m', Order_date) groups dates by Year and Month in SQLite
+    
     query = """
         SELECT 
             strftime('%Y-%m', Order_date) as month, 
@@ -104,7 +104,7 @@ def get_revenue_comparison(month1: str, month2: str):
     """Compares revenue between two specified months (format: YYYY-MM)."""
     conn = get_db_connection()
     cursor = conn.cursor()
-    # Parameterized query protects against SQL injection
+    
     query = """
         SELECT strftime('%Y-%m', Order_date) as month, SUM(Revenue) as total_revenue
         FROM sales
@@ -124,7 +124,7 @@ def get_revenue_comparison(month1: str, month2: str):
             
     absolute_change = m2_rev - m1_rev
     
-    # Handle zero division safely
+    
     if m1_rev == 0:
         percent_change = 100.0 if m2_rev > 0 else 0.0
     else:

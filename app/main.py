@@ -9,7 +9,6 @@ from app.schemas import AskRequest, AskResponse
 from app.question_interpreter import interpret_question
 import app.analytics as analytics
 
-# Ensure the database is initialized before the app fully starts
 @contextlib.asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Starting up... Initializing database from CSV.")
@@ -19,7 +18,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Mini AI BI Assistant", lifespan=lifespan)
 
-# Required Endpoints
+
 
 @app.get("/health")
 def health_check():
@@ -48,7 +47,6 @@ def ask_question(request: AskRequest):
         intent=intent
     )
     
-    # Route to appropriate deterministic SQL analytic function
     try:
         if intent == "total_revenue":
             data, sql = analytics.get_total_revenue()
@@ -94,7 +92,6 @@ def ask_question(request: AskRequest):
         
     return response
 
-# Serve static files (Frontend) - We will create these next
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 

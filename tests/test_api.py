@@ -3,13 +3,11 @@ from fastapi.testclient import TestClient
 import sys
 import os
 
-# Ensure the app module can be found when running tests from the root directory
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from app.main import app
 from app.database import init_db
 
-# Create a TestClient instance to make requests to our FastAPI app
 client = TestClient(app)
 
 def setup_module(module):
@@ -55,7 +53,7 @@ def test_ask_highest_revenue_product():
     data = response.json()
     assert data["success"] is True
     assert data["intent"] == "highest_revenue_product"
-    # FIXED: Look for the English words, not the underscored key
+    
     assert "highest revenue product" in data["answer"].lower() 
     assert isinstance(data["supporting_data"], list)
 
@@ -81,7 +79,7 @@ def test_ask_highest_revenue_region():
     data = response.json()
     assert data["success"] is True
     assert data["intent"] == "highest_revenue_region"
-    # FIXED: Look for the English words used in our response
+    
     assert "generated the highest sales" in data["answer"].lower()
 
 def test_ask_revenue_comparison():

@@ -95,7 +95,6 @@ function renderSupportingData(intent, data) {
 
     let html = '<h3>Data Breakdown</h3><table class="data-table"><thead><tr>';
     
-    // Very simple table rendering based on intent
     if (intent === 'monthly_revenue_trend' && Array.isArray(data.supporting_data)) {
         html += '<th>Month</th><th>Revenue (₹)</th></tr></thead><tbody>';
         data.supporting_data.forEach(row => {
@@ -123,7 +122,7 @@ function renderSupportingData(intent, data) {
         html += `<tr><td>Absolute Change</td><td>₹${data.absolute_change.toLocaleString()}</td></tr>`;
         html += `<tr><td>% Change</td><td>${data.percentage_change}%</td></tr>`;
     } else {
-        return; // No structured data to show
+        return; 
     }
 
     html += '</tbody></table>';

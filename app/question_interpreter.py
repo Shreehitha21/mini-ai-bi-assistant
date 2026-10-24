@@ -4,10 +4,8 @@ import json
 import google.generativeai as genai
 from dotenv import load_dotenv
 
-# Load environment variables from .env
 load_dotenv()
 
-# Initialize Gemini AI if key exists
 API_KEY = os.getenv("GEMINI_API_KEY")
 AI_AVAILABLE = False
 if API_KEY and API_KEY != "your_api_key_here":
@@ -28,7 +26,7 @@ def interpret_with_regex(question: str):
     elif "region" in question or "highest sales" in question:
         return {"intent": "highest_revenue_region", "parameters": {}}
     elif "change" in question or "compare" in question or "between" in question:
-        # Default extraction for demo purposes in fallback mode
+        
         return {"intent": "revenue_comparison", "parameters": {"month1": "2026-01", "month2": "2026-02"}}
         
     return {"intent": "unsupported", "parameters": {}}
@@ -64,7 +62,7 @@ def interpret_question(question: str):
     try:
         response = model.generate_content(prompt)
         text_response = response.text.strip()
-        # Clean up in case the LLM includes markdown
+        
         if text_response.startswith("```json"):
              text_response = text_response[7:-3]
         return json.loads(text_response)

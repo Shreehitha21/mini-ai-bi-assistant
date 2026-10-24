@@ -1,11 +1,9 @@
 from pydantic import BaseModel
 from typing import Optional, Any, Dict, List
 
-# What we expect to receive from the frontend
 class AskRequest(BaseModel):
     question: str
 
-# What we will send back to the frontend
 class AskResponse(BaseModel):
     success: bool
     question: str

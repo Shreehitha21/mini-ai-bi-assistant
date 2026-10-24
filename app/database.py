@@ -3,7 +3,6 @@ import csv
 import os
 from datetime import datetime
 
-# Use absolute paths so it works during deployment and testing
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB_PATH = os.path.join(BASE_DIR, "data", "sales.db")
 CSV_PATH = os.path.join(BASE_DIR, "data", "sales.csv")
@@ -11,7 +10,7 @@ CSV_PATH = os.path.join(BASE_DIR, "data", "sales.csv")
 def get_db_connection():
     """Establish a read-only or standard connection to the database."""
     conn = sqlite3.connect(DB_PATH, check_same_thread=False)
-    conn.row_factory = sqlite3.Row # Allows accessing columns by name
+    conn.row_factory = sqlite3.Row 
     return conn
 
 def init_db():
@@ -19,7 +18,6 @@ def init_db():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    # Create table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS sales (
             Transaction_Id TEXT PRIMARY KEY,
@@ -36,7 +34,6 @@ def init_db():
         )
     ''')
     
-    # Clear existing data so we don't duplicate on restarts (useful for Render deployment)
     cursor.execute('DELETE FROM sales')
 
     stats = {
@@ -73,8 +70,7 @@ def init_db():
                 stats["rejected_rows"] += 1
                 stats["rejection_reasons"].append(f"{txn_id}: Invalid Quantity format")
                 continue
-                
-            # Date formatting (DD-MM-YYYY to YYYY-MM-DD for proper SQL sorting)
+              
             try:
                 raw_date = row['Order_date']
                 parsed_date = datetime.strptime(raw_date, '%d-%m-%Y').strftime('%Y-%m-%d')
@@ -86,10 +82,8 @@ def init_db():
             unit_price = float(row['Unit_price'])
             discount = float(row['Discount_amount']) if row['Discount_amount'] else 0.0
             
-            # Pre-calculate Revenue for convenience, but rely on SQL for aggregations
             revenue = (qty * unit_price) - discount
 
-            # Insert valid row
             cursor.execute('''
                 INSERT INTO sales (Transaction_Id, Order_date, Product, Category, Region, Sales_channel, Quantity, Unit_price, Discount_amount, Status, Revenue)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -103,7 +97,6 @@ def init_db():
     conn.close()
     return stats
 
-# Initialize database when this module is run directly for testing
 if __name__ == "__main__":
     results = init_db()
     print("Database Initialization Complete:")
