@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini AI Business Intelligence Assistant</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mini AI Business Intelligence Assistant</h1>
+            <p>Ask questions about your sales data in plain English.</p>
+        </header>
+
+        <section class="examples">
+            <p>Try asking:</p>
+            <div class="example-buttons">
+                <button onclick="setQuestion('What is the total revenue?')">Total Revenue</button>
+                <button onclick="setQuestion('Which product generated the highest revenue?')">Top Product</button>
+                <button onclick="setQuestion('What is the monthly revenue trend?')">Monthly Trend</button>
+                <button onclick="setQuestion('Which region generated the highest sales?')">Top Region</button>
+                <button onclick="setQuestion('How did revenue change between January and February 2026?')">Compare Months</button>
+            </div>
+        </section>
+
+        <section class="input-section">
+            <input type="text" id="questionInput" placeholder="Type your question here..." onkeypress="handleKeyPress(event)">
+            <button id="askBtn" onclick="askQuestion()">Ask</button>
+        </section>
+
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div> Processing...
+        </div>
+
+        <section id="results" class="results" style="display: none;">
+            <div class="answer-box">
+                <h2>Answer</h2>
+                <p id="answerText"></p>
+            </div>
+            
+            <div class="details-box">
+                <h3>Supporting Details</h3>
+                <p><strong>Intent Detected:</strong> <span id="intentText"></span></p>
+                <p><strong>Operation:</strong></p>
+                <pre id="sqlText"></pre>
+            </div>
+
+            <div id="dataVisualization" class="visualization-box" style="display: none;">
+                <!-- We will inject simple tables or lists here -->
+            </div>
+            
+            <div id="limitationsBox" class="limitations-box" style="display: none;">
+                <p><strong>Note:</strong> <span id="limitationsText"></span></p>
+            </div>
+        </section>
+        
+        <section id="dataQuality" class="data-quality">
+            <h3>Data Quality Report</h3>
+            <div id="qualityStats">Loading...</div>
+        </section>
+
+        <footer>
+            <p>Educational BI Assistant built with FastAPI and Python.</p>
+        </footer>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

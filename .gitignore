@@ -1,0 +1,14 @@
+# Environments
+venv/
+env/
+__pycache__/
+
+# Environment variables (SECURITY RISK if committed)
+.env
+
+# Database (We rebuild this from CSV on the server)
+*.db
+*.sqlite3
+
+# Test caches
+.pytest_cache/
